@@ -32,20 +32,20 @@ public class UserService {
 
         Firestore dbFirestore = FirestoreClient.getFirestore();
 
-        DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(name);
+    DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(name);
 
-        ApiFuture<DocumentSnapshot> future = documentReference.get();
+    ApiFuture<DocumentSnapshot> future = documentReference.get();
 
-        DocumentSnapshot document = future.get();
+    DocumentSnapshot document = future.get();
 
-        User user = null;
+    User user = null;
         if (document.exists()) {
-            user = document.toObject(User.class);
-            return user;
-        } else {
-            return null;
-        }
+        user = document.toObject(User.class);
+        return user;
+    } else {
+        return null;
     }
+}
 
     public List<User> getUserDetails() throws ExecutionException, InterruptedException {
 
