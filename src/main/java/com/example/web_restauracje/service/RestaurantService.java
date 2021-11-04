@@ -38,7 +38,6 @@ public class RestaurantService {
                                                                          System.out.println("tu postaw breakpointa");
                                                                      }
                                                                  }
-
                                                                  @Override
                                                                  public void onCancelled(DatabaseError databaseError) {
 
