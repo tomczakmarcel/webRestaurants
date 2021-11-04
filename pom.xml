@@ -16,9 +16,15 @@
 	<properties>
 		<java.version>11</java.version>
 	</properties>
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
+			<groupId>org.springframework.boot</groupId>`
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
@@ -33,7 +39,11 @@
 			<artifactId>firebase-admin</artifactId>
 			<version>8.1.0</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.github.bane73</groupId>
+			<artifactId>firebase4j</artifactId>
+			<version>1836d7bbf2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -44,5 +54,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
