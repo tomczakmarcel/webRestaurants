@@ -1,5 +1,6 @@
 package com.example.web_restauracje;
 
+import com.example.web_restauracje.firebase.FirebaseInit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

@@ -1,8 +1,11 @@
 package com.example.web_restauracje.firebase;
 
+import com.example.web_restauracje.models.Database;
+import com.example.web_restauracje.models.Restaurant;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.database.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -35,5 +38,21 @@ public class FirebaseInit {
         catch (Exception e){
             e.printStackTrace();
         }
+
+        var test = new ValueEventListener(){
+            @Override
+            public void onDataChange(@org.jetbrains.annotations.NotNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    Restaurant res = ds.getValue(Restaurant.class);
+                    Database.getInstance().addRestaurant(res);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println(databaseError);
+            }
+        };
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("restaurants").addListenerForSingleValueEvent(test);
     }
 }
