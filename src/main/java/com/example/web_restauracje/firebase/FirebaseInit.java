@@ -19,7 +19,7 @@ import java.util.Objects;
 public class FirebaseInit {
 
     @PostConstruct
-    public void init() throws IOException {
+    public static void init() throws IOException {
 
         FileInputStream serviceAccount = null;
 
