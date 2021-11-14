@@ -21,7 +21,17 @@ public class Database {
         return restaurantList;
     }
     public static void addRestaurant(Restaurant restaurant){
-        restaurantList.add(restaurant);
+        var name = restaurant.getName();
+        var test = restaurant;
+        try {
+            test = restaurantList.stream().filter(x -> x.getName().equals(name)).findFirst().get();
+        }
+        catch(Exception e)
+        {System.out.println(e);
+        test = null;}
+        if (test == null) {
+            restaurantList.add(restaurant);
+        }
     }
 
     @NotNull

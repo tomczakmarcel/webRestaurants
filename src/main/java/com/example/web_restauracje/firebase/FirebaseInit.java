@@ -25,34 +25,32 @@ public class FirebaseInit {
 
         try {
         serviceAccount = new FileInputStream("./firebaseKey.json");
-
         FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .setDatabaseUrl("https://integracjaprojekt-default-rtdb.firebaseio.com")
                 .build();
-
-/*		if (FirebaseApp.getApps().isEmpty()) {
-			FirebaseApp.initializeApp(options);
-		}*/
-        FirebaseApp.initializeApp(options);}
+        if(FirebaseApp.getApps().isEmpty())
+        { FirebaseApp.initializeApp(options);};}
         catch (Exception e){
             e.printStackTrace();
         }
 
-        var test = new ValueEventListener(){
+        var dataSnapShot = new ValueEventListener() {
             @Override
             public void onDataChange(@org.jetbrains.annotations.NotNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Restaurant res = ds.getValue(Restaurant.class);
                     Database.getInstance().addRestaurant(res);
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println(databaseError);
             }
         };
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("restaurants").addListenerForSingleValueEvent(test);
+        mDatabase.child("restaurants").addListenerForSingleValueEvent(dataSnapShot);
     }
 }
+
