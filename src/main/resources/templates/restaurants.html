@@ -1,16 +1,47 @@
-<!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
-
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Good Thymes Virtual Grocery</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" media="all"
-          href="../../css/gtvg.css" th:href="@{/css/gtvg.css}" />
+    <meta charset="UTF-8"/>
+    <title>All your restaurants</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
 </head>
 
 <body>
+<div class="container">
+    <div class="text-center"><img th:src="@{https://media-cdn.tripadvisor.com/media/photo-s/10/e5/a4/fc/restaurant.jpg}" alt=""/></imghttps:></div>
+    <div class="row" style="height: 50px">
+    </div>
+        <div class="row">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col"> Restaurant ID: </th>
+                <th scope="col"> Name of Restaurant: </th>
+                <th scope="col"> Description: </th>
+                <th scope="col"> Meal list </th>
+                <th scope="col"> Opening hours </th>
+                <th scope="col"> Reservation list </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${restaurants.empty}">
+                <td colspan="2"> No Restaurants Available, you can add one below </td>
+            </tr>
+            <tr th:each="restaurant : ${restaurants}">
+                <td><span th:text="${restaurant.restaurantId}"> Restaurant ID: </span></td>
+                <td><span th:text="${restaurant.name}"> Name of Restaurant: </span></td>
+                <td><span th:text="${restaurant.description}"> Description: </span></td>
+                <td><button type="submit" name="submit" value="value" class="btn btn-info"> Go to menu </button></td>
+                <td><button type="submit" name="submit" value="value" class="btn btn-info"> Go to opening hours </button></td>
+                <td><button type="submit" name="submit" value="value" class="btn btn-info"> Go to reservation list </button></td>
+            </tr>
+            </tbody>
+        </table>
 
+        <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+    </div>
+</div>
 </body>
-
 </html>

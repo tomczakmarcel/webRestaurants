@@ -14,7 +14,7 @@
 	<name>web_restauracje</name>
 	<description>Integracyjne Lab Projekt</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>15</java.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -24,10 +24,10 @@
 	</repositories>
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>`
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<version>2.6.0</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -58,6 +58,11 @@
 			<groupId>org.jetbrains</groupId>
 			<artifactId>annotations</artifactId>
 			<version>13.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>4.0.0-2</version>
 		</dependency>
 	</dependencies>
 
