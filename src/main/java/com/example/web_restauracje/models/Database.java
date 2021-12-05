@@ -20,6 +20,11 @@ public class Database {
     public static ArrayList<Restaurant> getRestaurantList(){
         return restaurantList;
     }
+    public static ArrayList<Meal> getMealListFromRestaurant(String name){
+        var restaurant = getRestaurant(name);
+        var mealList = restaurant.getMealList();
+        return mealList;
+    }
     public static void addRestaurant(Restaurant restaurant){
         var name = restaurant.getName();
         var test = restaurant;
@@ -37,6 +42,12 @@ public class Database {
     @NotNull
     public static Restaurant getRestaurant(String name){
         return restaurantList.stream().filter(x -> x.getName().equals(name)).findFirst().get();
+    }
+
+    @NotNull
+    public static Restaurant getRestaurantById(Integer id){
+        var test = restaurantList;
+        return restaurantList.stream().filter(x -> x.getRestaurantId() == id).findFirst().get();
     }
 
     public static OpeningHour getOpeningHour(String restaurantName, String date){

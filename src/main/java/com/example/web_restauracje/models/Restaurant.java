@@ -6,6 +6,7 @@ public class Restaurant {
     private int restaurantId;
     private String name;
     private String description;
+    private String logoURL;
     private ArrayList<Meal> mealList;
     private ArrayList<Reservation> reservationList;
     private boolean expanded;
@@ -35,9 +36,10 @@ public class Restaurant {
         this.description = description;
     }
 
-    public ArrayList<Meal> getMealList() {
-        return mealList;
-    }
+    public ArrayList<Meal> getMealList() { return mealList; }
+
+    public String getLogoURL() { return logoURL; }
+    public void setLogoURL(){ this.logoURL = logoURL; };
 
     public void setMealList(ArrayList<Meal> mealList) {
         this.mealList = mealList;
@@ -69,7 +71,7 @@ public class Restaurant {
 
     public Restaurant() {}
 
-    public Restaurant(int restaurantId, String name, String description, ArrayList<Meal> mealList,
+    public Restaurant(int restaurantId, String name, String logoURL, String description, ArrayList<Meal> mealList,
                       ArrayList<Reservation> reservationList, boolean expanded, ArrayList<OpeningHour> openingHour) {
         this.restaurantId = restaurantId;
         this.name = name;
@@ -78,5 +80,6 @@ public class Restaurant {
         this.reservationList = reservationList;
         this.expanded = expanded;
         this.openingHour = openingHour;
+        this.logoURL = logoURL;
     }
 }

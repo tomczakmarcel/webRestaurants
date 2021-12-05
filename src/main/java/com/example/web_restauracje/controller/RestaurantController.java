@@ -15,14 +15,33 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.concurrent.ExecutionException;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/restaurants")
 public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
 
-    @GetMapping("/restaurants")
+    @GetMapping("/all")
     public String getAllRestaurants(Model model) throws ExecutionException, InterruptedException, FirebaseException {
         model.addAttribute("restaurants", Database.getRestaurantList());
         return "restaurants";
+    }
+
+    @GetMapping("/{restaurantName}")
+    public String getRestaurantDetails(Model model, @PathVariable String restaurantName) throws ExecutionException, InterruptedException, FirebaseException {
+        String date[] = {"Monday-Thursday", "Friday", "Saturday", "Sunday"};
+        try
+        {
+            model.addAttribute("restaurantInfo",Database.getRestaurant(restaurantName));
+            for(String dates : date)
+                model.addAttribute("openingHours", Database.getOpeningHour(restaurantName, dates));
+
+            model.addAttribute("mealList", Database.getMealListFromRestaurant(restaurantName));
+        }
+        catch (Exception noRestaurantOfThisName)
+        {
+            return "noRestaurantAvailable";
+        }
+
+        return "restaurant";
     }
 }
