@@ -28,7 +28,7 @@
             <tr th:each="meal : ${mealList}">
                 <td><span th:text="${meal.category}"> Category </span></td>
                 <td><span th:text="${meal.name}"> Name </span></td>
-                <td><span th:text="${meal.price}"> Price </span></td>
+                <td><span th:text="${meal.price}"/> zł </td>
                 <td><img th:src="${meal.photoUrl}" th:target="_blank" type="submit" name="submit" value="value" style="height: 50px" alt="${meal.name} photo"/></td>
             </tr>
             </tbody>
