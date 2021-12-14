@@ -1,15 +1,16 @@
 package com.example.web_restauracje.service;
 
-import com.example.web_restauracje.models.User;
+import com.example.web_restauracje.models.Database;
 import com.example.web_restauracje.models.User;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.WriteResult;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.*;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,20 +33,20 @@ public class UserService {
 
         Firestore dbFirestore = FirestoreClient.getFirestore();
 
-    DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(name);
+        DocumentReference documentReference = dbFirestore.collection(COLLECTION_NAME).document(name);
 
-    ApiFuture<DocumentSnapshot> future = documentReference.get();
+        ApiFuture<DocumentSnapshot> future = documentReference.get();
 
-    DocumentSnapshot document = future.get();
+        DocumentSnapshot document = future.get();
 
-    User user = null;
+        User user = null;
         if (document.exists()) {
-        user = document.toObject(User.class);
-        return user;
-    } else {
-        return null;
+            user = document.toObject(User.class);
+            return user;
+        } else {
+            return null;
+        }
     }
-}
 
     public List<User> getUserDetails() throws ExecutionException, InterruptedException {
 
@@ -68,6 +69,10 @@ public class UserService {
         }
         return userList;
     }
+
+//    public User getUserDetails(String uid){
+//        return getUserList().stream().filter(x -> x.get)
+//    }
 
 
     public String updateUser(User user) throws ExecutionException, InterruptedException {

@@ -4,6 +4,8 @@ public class Reservation {
     private String date;
     private int from;
     private String person;
+    private String id;
+    private int restaurantId;
     private int to;
     private int table;
 
@@ -12,6 +14,15 @@ public class Reservation {
     public String getDate() {
         return date;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 
     public void setDate(String date) {
         this.date = date;
@@ -49,11 +60,21 @@ public class Reservation {
         this.table = table;
     }
 
-    public Reservation(String date, int from, String person, int to, int tableId) {
+    public int getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(int restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+
+    public Reservation(String date, int from, String person, int to, int tableId, int restaurantId, String id) {
         this.date = date;
         this.from = from;
         this.person = person;
         this.to = to;
         this.table = tableId;
+        this.restaurantId = restaurantId;
+        this.id = id;
     }
 }
