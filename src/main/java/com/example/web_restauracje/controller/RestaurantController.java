@@ -16,13 +16,13 @@ public class RestaurantController {
     private RestaurantService restaurantService;
 
     @GetMapping("/all")
-    public String getAllRestaurants(Model model) throws ExecutionException, InterruptedException, FirebaseException {
+    public String getAllRestaurants(Model model) {
         model.addAttribute("restaurants", Database.getRestaurantList());
         return "restaurants";
     }
 
     @GetMapping("/{restaurantName}")
-    public String getRestaurantDetails(Model model, @PathVariable String restaurantName) throws ExecutionException, InterruptedException, FirebaseException {
+    public String getRestaurantDetails(Model model, @PathVariable String restaurantName) {
         String date[] = {"Monday-Thursday", "Friday", "Saturday", "Sunday"};
         try
         {

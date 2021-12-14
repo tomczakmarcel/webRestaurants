@@ -20,7 +20,8 @@ public class Database {
     private static ArrayList<Reservation> reservationList = new ArrayList<>();
     private static ArrayList<User> userList = new ArrayList<>();
 
-    private Database(){}
+    private Database() {
+    }
 
     public static Database getInstance(){
         if (INSTANCE == null){
