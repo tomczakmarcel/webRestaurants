@@ -2,7 +2,7 @@ package com.example.web_restauracje.controller;
 
 import com.example.web_restauracje.models.Database;
 import com.example.web_restauracje.service.RestaurantService;
-import net.thegreshams.firebase4j.error.FirebaseException;
+import com.google.firebase.FirebaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
