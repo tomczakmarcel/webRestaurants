@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Meal list</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+
+<body>
+<div class="container">
+    <div class="text-center"><img th:src="${restaurantInfo.logoURL}" alt="Logo restauracji"/></imghttps:></div>
+    <div class="row" style="height: 50px">
+    </div>
+    <div class="row">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col"> Category </th>
+                <th scope="col"> Name </th>
+                <th scope="col"> Price </th>
+                <th scope="col"> Photo </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${mealList.empty}">
+                <td colspan="2"> No meals Available, you can add one below </td>
+            </tr>
+            <tr th:each="meal : ${mealList}">
+                <td><span th:text="${meal.category}"> Category </span></td>
+                <td><span th:text="${meal.name}"> Name </span></td>
+                <td><span th:text="${meal.price}"/> zł </td>
+                <td><img th:src="${meal.photoUrl}" th:target="_blank" type="submit" name="submit" value="value" style="height: 50px" alt="${meal.name} photo"/></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+    </div>
+</div>
+</body>
+</html>
