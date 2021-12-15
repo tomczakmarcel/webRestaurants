@@ -14,27 +14,30 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class FirebaseInit {
 
     @PostConstruct
-    public static void init() throws IOException {
+    public static void init() throws ExecutionException, InterruptedException {
 
         FileInputStream serviceAccount = null;
 
         try {
-        serviceAccount = new FileInputStream("./firebaseKey.json");
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setDatabaseUrl("https://integracjaprojekt-default-rtdb.firebaseio.com")
-                .build();
-        if(FirebaseApp.getApps().isEmpty())
-        { FirebaseApp.initializeApp(options);};}
-        catch (Exception e){
+            serviceAccount = new FileInputStream("./firebaseKey.json");
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setDatabaseUrl("https://integracjaprojekt-default-rtdb.firebaseio.com")
+                    .build();
+            if (FirebaseApp.getApps().isEmpty()) {
+                FirebaseApp.initializeApp(options);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
+        Database.loadReservationList();
         var dataSnapShot = new ValueEventListener() {
             @Override
             public void onDataChange(@org.jetbrains.annotations.NotNull DataSnapshot dataSnapshot) {

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Reservation List</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+        /* wygl?d elementów - a */
+         a {
+            text-decoration: none;
+            color: #000;
+        }
+
+        /* wygl?d elementów - a */
+         a:hover {
+            text-decoration: none;
+            color: #000;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container my-2">
+    <center><h2>Reservation List</h2></center>
+    <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${primary}"></div>
+    <div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}"></div>
+    <table border="1" class="table table-striped table-responsive-md">
+        <thead>
+        <tr>
+            <th scope="col"> Restaurant ID:</th>
+            <th scope="col"> User ID:</th>
+            <th scope="col"> Date :</th>
+            <th scope="col"> From:</th>
+            <th scope="col"> To:</th>
+            <th scope="col"> Table ID:</th>
+            <th scope="col"> More details</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="reservation : ${reservationList}">
+
+                <td><center><span th:text="${reservation.restaurantId}"></span></center></td>
+                     <!--            <td><span th:text="${reservation.person}"></span></t</center>d>-->
+                <td><center><a th:href="@{/api/users/{id}(id=${reservation.person})}" th:text="${reservation.person}"></a></center></td>
+                <td><center><span th:text="${reservation.date}"></span></center></td>
+                <td><center><span th:text="${reservation.from}"></span></center></td>
+                <td><center><span th:text="${reservation.to}"></span></center></td>
+                <td><center><span th:text="${reservation.table}"></span></center></td>
+                <!--            <td> <a th:href="@{/showFormForUpdate/{id}(id=${employee.id})}" class="btn btn-primary">Update</a>-->
+                <!--                <a th:href="@{/deleteEmployee/{id}(id=${employee.id})}" class="btn btn-danger">Delete</a>-->
+                <td><a th:href="@{/reservation/updateReservation/{id}(id=${reservation.id})}" class="btn btn-primary">Update</a>
+                    <a th:href="@{/reservation/deleteReservation/{id}(id=${reservation.id})}" class="btn btn-danger">Delete</a>
+                </td>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+
+</html>
+
+
+<!--<!DOCTYPE HTML>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8"/>-->
+<!--    <title>All your reservation</title>-->
+<!--    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>-->
+<!--</head>-->
+
+<!--<body>-->
+
+<!--<div class="container">-->
+<!--    <div class="text-center"><img th:src="asd" alt="Logo aaaa"/></imghttps:></div>-->
+<!--    <div class="row">-->
+<!--        <table class="table">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th scope="col"> RestaurantId: </th>-->
+<!--                <th scope="col"> User ID: </th>-->
+<!--                <th scope="col"> Date : </th>-->
+<!--                <th scope="col"> From: </th>-->
+<!--                <th scope="col"> To: </th>-->
+<!--                <th scope="col"> Table ID: </th>-->
+<!--                <th scope="col"> More details </th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr th:each="reservation : ${reservationList}">-->
+<!--                <td><span th:text="${reservation.restaurantId}"></span></td>-->
+<!--                <td><span th:text="${reservation.person}"></span></td>-->
+<!--                <td><span th:text="${reservation.date}"></span></td>-->
+<!--                <td><span th:text="${reservation.from}"></span></td>-->
+<!--                <td><span th:text="${reservation.to}"></span></td>-->
+<!--                <td><span th:text="${reservation.table}"></span></td>-->
+<!--                <td><a th:href="${reservation}" type="submit" name="submit" value="value" class="btn btn-light">More..</a></td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+
+<!--        <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>-->
+<!--        <script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>-->
+<!--        <script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<!--<script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>-->
+<!--<script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>-->
+<!--<script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>-->
+<!--</body>-->
+<!--</html>-->
+

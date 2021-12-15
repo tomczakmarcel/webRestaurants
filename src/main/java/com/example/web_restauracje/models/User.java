@@ -1,16 +1,30 @@
 package com.example.web_restauracje.models;
 
 public class User {
-    private String name;
-    private String surname;
+    private String Name;
+    private String Surname;
     private String email;
-    private String password;
 
-    public User(String name, String surname, String email, String password) {
-        this.name = name;
-        this.surname = surname;
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    private String userId;
+    private boolean isAdmin;
+
+
+    public User() { }
+
+    public User(String name, String surname, String email, boolean isAdmin, String userId) {
+        this.Name = name;
+        this.Surname = surname;
         this.email = email;
-        this.password = password;
+        this.isAdmin = isAdmin;
+        this.userId = userId;
     }
 
     public String getEmail() {
@@ -22,18 +36,26 @@ public class User {
     }
 
     public String getSurname() {
-        return surname;
+        return Surname;
     }
 
     public void setSurname(String surname) {
-        this.surname = surname;
+        this.Surname = surname;
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.Name = name;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }
