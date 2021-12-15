@@ -18,28 +18,57 @@ public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
 
-    @GetMapping("/all")
-    public String getAllRestaurants(Model model) throws ExecutionException, InterruptedException, FirebaseException {
+    @GetMapping("/")
+    public String getAllRestaurants(Model model) {
         model.addAttribute("restaurants", Database.getRestaurantList());
         return "restaurants";
     }
 
     @GetMapping("/{restaurantName}")
-    public String getRestaurantDetails(Model model, @PathVariable String restaurantName) throws ExecutionException, InterruptedException, FirebaseException {
+    public String getRestaurantDetails(Model model, @PathVariable String restaurantName) {
         String date[] = {"Monday-Thursday", "Friday", "Saturday", "Sunday"};
-        try
-        {
-            model.addAttribute("restaurantInfo",Database.getRestaurant(restaurantName));
-            for(String dates : date)
+        try {
+            model.addAttribute("restaurantInfo", Database.getRestaurant(restaurantName));
+            for (String dates : date)
                 model.addAttribute("openingHours", Database.getOpeningHour(restaurantName, dates));
 
             model.addAttribute("mealList", Database.getMealListFromRestaurant(restaurantName));
-        }
-        catch (Exception noRestaurantOfThisName)
-        {
+        } catch (Exception noRestaurantOfThisName) {
             return "noRestaurantAvailable";
         }
 
         return "restaurant";
     }
-}
+
+        @GetMapping("/{restaurantName}/meallist")
+        public String getRestaurantMeals(Model model, @PathVariable String restaurantName) throws ExecutionException, InterruptedException, FirebaseException
+        {
+            try
+            {
+                model.addAttribute("restaurantInfo",Database.getRestaurant(restaurantName));
+                model.addAttribute("mealList", Database.getMealListFromRestaurant(restaurantName));
+            }
+            catch (Exception noRestaurantOfThisName)
+            {
+                return "noRestaurantAvailable";
+            }
+
+            return "mealList";
+        }
+
+        @GetMapping("/{restaurantName}/openinghours")
+        public String getRestaurantOpeningHours(Model model, @PathVariable String restaurantName) throws ExecutionException, InterruptedException, FirebaseException {
+            try
+            {
+                model.addAttribute("restaurantInfo",Database.getRestaurant(restaurantName));
+                var test = Database.getOpeningHours(restaurantName);
+                model.addAttribute("openingHours", test);
+            }
+            catch (Exception noRestaurantOfThisName)
+            {
+                return "noRestaurantAvailable";
+            }
+
+            return "openinghours";
+        }
+    }
