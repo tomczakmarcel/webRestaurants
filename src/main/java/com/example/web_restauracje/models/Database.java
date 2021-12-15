@@ -1,5 +1,6 @@
 package com.example.web_restauracje.models;
 
+import com.example.web_restauracje.firebase.FirebaseInit;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
@@ -7,10 +8,8 @@ import com.google.firebase.cloud.FirestoreClient;
 import org.jetbrains.annotations.NotNull;
 
 import javax.management.relation.RelationServiceMBean;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.io.IOException;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class Database {
@@ -163,5 +162,40 @@ public class Database {
 
     public static ArrayList<User> getUserList() {
         return userList;
+    }
+
+    public static ArrayList<Meal> getMealList(String restaurantName) throws IOException, ExecutionException, InterruptedException {
+        ArrayList<Meal> meals;
+        try {
+            meals = getRestaurant(restaurantName).getMealList();
+            return meals;
+        } catch (NullPointerException exception) {
+            FirebaseInit.init();
+            return new ArrayList<>();
+        }
+    }
+
+    public static ArrayList<Meal> getMealListWithCategory(String restaurantName, String category) throws IOException, ExecutionException, InterruptedException {
+        ArrayList mealList = new ArrayList();
+        Collections.addAll(mealList, Database.getMealList(restaurantName).stream().filter(x -> x.getCategory().equals(category)).toArray());
+
+        return mealList;
+    }
+
+    public static ArrayList<String> getCategory(String restaurantName) throws IOException, ExecutionException, InterruptedException {
+        ArrayList<String> allCategory = new ArrayList<>();
+        ArrayList<String> uniqueCategory = new ArrayList<>();
+        for (int i = 0; i < Database.getMealList(restaurantName).size(); i++) {
+            allCategory.add(Database.getMealList(restaurantName).get(i).getCategory());
+        }
+
+        allCategory.stream().distinct().forEach(uniqueCategory::add);
+        return uniqueCategory;
+    }
+
+    public static ArrayList<OpeningHour> getOpeningHours(String restaurantName) throws IOException {
+        var restaurant = getRestaurant(restaurantName);
+        var openingHour = restaurant.getOpeningHour();
+        return openingHour;
     }
 }
