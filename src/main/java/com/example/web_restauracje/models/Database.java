@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.ExecutionException;
 
 public class Database {
 
@@ -61,7 +62,7 @@ public class Database {
         return new OpeningHour(open, close, date);
     }
 
-    public static ArrayList<Meal> getMealList(String restaurantName) throws IOException {
+    public static ArrayList<Meal> getMealList(String restaurantName) throws IOException, ExecutionException, InterruptedException {
         ArrayList<Meal> meals;
         try {
             meals = getRestaurant(restaurantName).getMealList();
