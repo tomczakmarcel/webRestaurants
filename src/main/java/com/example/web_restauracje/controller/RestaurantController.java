@@ -20,7 +20,7 @@ public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public String getAllRestaurants(Model model) throws ExecutionException, InterruptedException, FirebaseException {
         model.addAttribute("restaurants", Database.getRestaurantList());
         return "restaurants";
@@ -43,5 +43,36 @@ public class RestaurantController {
         }
 
         return "restaurant";
+    }
+
+    @GetMapping("/{restaurantName}/meallist")
+    public String getRestaurantMeals(Model model, @PathVariable String restaurantName) throws ExecutionException, InterruptedException, FirebaseException {
+        try
+        {
+            model.addAttribute("restaurantInfo",Database.getRestaurant(restaurantName));
+            model.addAttribute("mealList", Database.getMealListFromRestaurant(restaurantName));
+        }
+        catch (Exception noRestaurantOfThisName)
+        {
+            return "noRestaurantAvailable";
+        }
+
+        return "mealList";
+    }
+
+    @GetMapping("/{restaurantName}/openinghours")
+    public String getRestaurantOpeningHours(Model model, @PathVariable String restaurantName) throws ExecutionException, InterruptedException, FirebaseException {
+        try
+        {
+            model.addAttribute("restaurantInfo",Database.getRestaurant(restaurantName));
+            var test = Database.getOpeningHours(restaurantName);
+            model.addAttribute("openingHours", test);
+        }
+        catch (Exception noRestaurantOfThisName)
+        {
+            return "noRestaurantAvailable";
+        }
+
+        return "openinghours";
     }
 }

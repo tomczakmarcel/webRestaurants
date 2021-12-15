@@ -1,7 +1,10 @@
 package com.example.web_restauracje.models;
+import com.example.web_restauracje.firebase.FirebaseInit;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Database {
 
@@ -20,11 +23,13 @@ public class Database {
     public static ArrayList<Restaurant> getRestaurantList(){
         return restaurantList;
     }
+
     public static ArrayList<Meal> getMealListFromRestaurant(String name){
         var restaurant = getRestaurant(name);
         var mealList = restaurant.getMealList();
         return mealList;
     }
+
     public static void addRestaurant(Restaurant restaurant){
         var name = restaurant.getName();
         var test = restaurant;
@@ -58,6 +63,35 @@ public class Database {
         return new OpeningHour(open, close, date);
     }
 
+    public static ArrayList<Meal> getMealList(String restaurantName) throws IOException {
+        ArrayList<Meal> meals;
+        try {
+            meals = getRestaurant(restaurantName).getMealList();
+            return meals;
+        } catch (NullPointerException exception) {
+            FirebaseInit.init();
+            return new ArrayList<>();
+        }
+    }
+
+    public static ArrayList<Meal> getMealListWithCategory(String restaurantName, String category) throws IOException {
+        ArrayList mealList = new ArrayList();
+        Collections.addAll(mealList, Database.getMealList(restaurantName).stream().filter(x -> x.getCategory().equals(category)).toArray());
+
+        return mealList;
+    }
+
+    public static ArrayList<String> getCategory(String restaurantName) throws IOException {
+        ArrayList<String> allCategory = new ArrayList<>();
+        ArrayList<String> uniqueCategory = new ArrayList<>();
+        for (int i = 0; i < Database.getMealList(restaurantName).size(); i++) {
+            allCategory.add(Database.getMealList(restaurantName).get(i).getCategory());
+        }
+
+        allCategory.stream().distinct().forEach(uniqueCategory::add);
+        return uniqueCategory;
+    }
+
     public static ArrayList<Reservation> getReservationList (String restaurantName, String date){
         ArrayList<Reservation> reservations = new ArrayList<>();
         for (Object newReservation :
@@ -66,5 +100,11 @@ public class Database {
         }
 
         return reservations;
+    }
+
+    public static ArrayList<OpeningHour> getOpeningHours(String restaurantName) throws IOException {
+        var restaurant = getRestaurant(restaurantName);
+        var openingHour = restaurant.getOpeningHour();
+        return openingHour;
     }
 }
