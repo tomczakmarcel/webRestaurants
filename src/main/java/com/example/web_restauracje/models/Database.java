@@ -72,14 +72,14 @@ public class Database {
         }
     }
 
-    public static ArrayList<Meal> getMealListWithCategory(String restaurantName, String category) throws IOException {
+    public static ArrayList<Meal> getMealListWithCategory(String restaurantName, String category) throws IOException, ExecutionException, InterruptedException {
         ArrayList mealList = new ArrayList();
         Collections.addAll(mealList, Database.getMealList(restaurantName).stream().filter(x -> x.getCategory().equals(category)).toArray());
 
         return mealList;
     }
 
-    public static ArrayList<String> getCategory(String restaurantName) throws IOException {
+    public static ArrayList<String> getCategory(String restaurantName) throws IOException, ExecutionException, InterruptedException {
         ArrayList<String> allCategory = new ArrayList<>();
         ArrayList<String> uniqueCategory = new ArrayList<>();
         for (int i = 0; i < Database.getMealList(restaurantName).size(); i++) {
