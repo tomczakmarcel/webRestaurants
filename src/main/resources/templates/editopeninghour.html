@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Opening hours</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+
+<body>
+<div class="container">
+    <div class="text-center"><img th:src="${restaurantInfo.logoURL}" alt="Logo restauracji"/></imghttps:></div>
+    <div class="row" style="height: 50px">
+    </div>
+    <div class="row">
+        <form action="#" th:action="@{'/restaurants/' + ${restaurantInfo.name} + '/openinghours/' + ${openingHour.when}}" th:object="${openingHour}" th:method="post">
+
+            <label th:text="${openingHour.when}">When</label>
+            <br>
+            <label for="open">Wpisz godzinę otwarcia: </label>
+            <input type="number" th:field="*{open}" class="form-control" id="open" aria-describedby="titleHelp" placeholder="Wpisz godzinę otwarcia">
+
+            <label for="close">Wpisz godzinę zamknięcia: </label>
+            <input type="number" th:field="*{close}" class="form-control" id="close" aria-describedby="titleHelp" placeholder="Wpisz godzinę zamknięcia">
+
+            <button type="submit" class="btn btn-primary">Koniec edycji</button>
+        </form>
+
+        <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+    </div>
+</div>
+</body>
+</html>

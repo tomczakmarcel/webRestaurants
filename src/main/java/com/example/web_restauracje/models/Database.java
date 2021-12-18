@@ -5,9 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import org.jetbrains.annotations.NotNull;
 
 import javax.management.relation.RelationServiceMBean;
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -29,8 +33,16 @@ public class Database {
         return INSTANCE;
     }
 
-    public static ArrayList<Restaurant> getRestaurantList() {
-        return restaurantList;
+    public static ArrayList<Restaurant> getRestaurantList()
+    {
+        ArrayList<Restaurant> restaurants= new ArrayList<>();
+        try {
+            restaurants = restaurantList;
+        }
+        catch (NullPointerException exception){
+            getRestaurantList();
+        }
+        return restaurants;
     }
 
     public static ArrayList<Meal> getMealListFromRestaurant(String name) {
@@ -197,5 +209,28 @@ public class Database {
         var restaurant = getRestaurant(restaurantName);
         var openingHour = restaurant.getOpeningHour();
         return openingHour;
+    }
+
+    public static void editHours(String restaurantName, int newCloseTime, int newOpenTime, String when) throws IOException, ExecutionException, InterruptedException {
+        OpeningHour openH = getOpeningHours(restaurantName).stream().filter(x -> x.getWhen().equals(when)).findFirst().orElse(null);
+        removeOpeningHour(restaurantName, openH);
+        openH.setOpen(newOpenTime);
+        openH.setClose(newCloseTime);
+        openH.setWhen(when);
+        getOpeningHours(restaurantName).add(openH);
+        updateDataOnFirebase();
+    }
+
+    public static void updateDataOnFirebase() throws ExecutionException, InterruptedException {
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        var restaurantsArray = Database.getRestaurantList();
+        mDatabase.child("restaurants").setValueAsync(restaurantsArray); //ciekawe czy to zadziala v1 xD
+        FirebaseInit.init(); //ciekawe czy to zadziala v2 xD
+    }
+
+    protected static void removeOpeningHour(String restaurantName, OpeningHour openingHour) throws IOException, ExecutionException, InterruptedException {
+        getOpeningHours(restaurantName).remove(openingHour);
+        updateDataOnFirebase();
     }
 }
