@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
+import static java.lang.Integer.valueOf;
+
 public class Database {
 
     private static Database INSTANCE;
@@ -48,6 +50,18 @@ public class Database {
     public static ArrayList<Meal> getMealListFromRestaurant(String name) {
         var restaurant = getRestaurant(name);
         var mealList = restaurant.getMealList();
+        Collections.sort(mealList, new Comparator<Meal>() {
+            @Override
+            public int compare(Meal o1, Meal o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        Collections.sort(mealList, new Comparator<Meal>() {
+            @Override
+            public int compare(Meal o1, Meal o2) {
+                return o1.getCategory().compareTo(o2.getCategory());
+            }
+        });
         return mealList;
     }
 
@@ -194,6 +208,22 @@ public class Database {
         return mealList;
     }
 
+    public static Meal getMeal(String restaurantName, String mealName) throws IOException, ExecutionException, InterruptedException {
+        String name = getRestaurant(restaurantName)
+                .getMealList().stream().filter(x -> x.getName().equals(mealName)).findFirst().get().getName();
+
+        String photoUrl = getRestaurant(restaurantName)
+                .getMealList().stream().filter(x -> x.getName().equals(mealName)).findFirst().get().getPhotoUrl();
+
+        double price = getRestaurant(restaurantName)
+                .getMealList().stream().filter(x -> x.getName().equals(mealName)).findFirst().get().getPrice();
+
+        String category = getRestaurant(restaurantName)
+                .getMealList().stream().filter(x -> x.getName().equals(mealName)).findFirst().get().getCategory();
+
+        return new Meal(price, name, photoUrl, category);
+    }
+
     public static ArrayList<String> getCategory(String restaurantName) throws IOException, ExecutionException, InterruptedException {
         ArrayList<String> allCategory = new ArrayList<>();
         ArrayList<String> uniqueCategory = new ArrayList<>();
@@ -219,6 +249,36 @@ public class Database {
         openH.setWhen(when);
         getOpeningHours(restaurantName).add(openH);
         updateDataOnFirebase();
+    }
+
+    public static void editMeal(String restaurantName, String mealName, String newCategory, String newName, double newPrice, String newPhotoUrl) throws InterruptedException, ExecutionException, IOException {
+        Meal meal = getRestaurant(restaurantName)
+                .getMealList().stream().filter(x -> x.getName().equals(mealName)).findFirst().orElseThrow(null);
+        getMealList(restaurantName).remove(meal);
+        assert meal != null;
+        meal.setName(newName);
+        meal.setPrice(newPrice);
+        meal.setCategory(newCategory);
+        meal.setPhotoUrl(newPhotoUrl);
+        getMealList(restaurantName).add(meal);
+        Database.updateDataOnFirebase();
+    }
+
+    public static void addMeal(String restaurantName, String newCategory, String newName, double newPrice, String newPhotoUrl) throws InterruptedException, ExecutionException, IOException {
+        Meal meal = new Meal();
+        meal.setName(newName);
+        meal.setPrice(newPrice);
+        meal.setCategory(newCategory);
+        meal.setPhotoUrl(newPhotoUrl);
+        getMealList(restaurantName).add(meal);
+        Database.updateDataOnFirebase();
+    }
+
+    public static void removeMeal(String restaurantName, String mealName) throws InterruptedException, ExecutionException, IOException {
+        Meal meal = getRestaurant(restaurantName)
+                .getMealList().stream().filter(x -> x.getName().equals(mealName)).findFirst().orElseThrow(null);
+        getMealList(restaurantName).remove(meal);
+        Database.updateDataOnFirebase();
     }
 
     public static void updateDataOnFirebase() throws ExecutionException, InterruptedException {

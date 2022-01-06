@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Opening hours</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+
+<body>
+<div class="container">
+    <div class="text-center"><img th:src="${restaurantInfo.logoURL}" alt="Logo restauracji"/></imghttps:></div>
+    <div class="row" style="height: 50px">
+    </div>
+    <div class="d-flex justify-content-center">
+        <form action="#" th:action="@{'/restaurants/' + ${restaurantInfo.name} + '/meallist/' + ${meal.name}}" th:object="${meal}" th:method="post">
+            <label th:text="@{'Edytujesz: ' + ${meal.name}}"></label>
+            <br>
+            <br>
+            <label for="name">Wpisz nową nazwę:</label>
+            <input type="text" th:field="*{name}" class="form-control" id="name" aria-describedby="titleHelp" placeholder="Wpisz nazwę pozycji">
+            <label for="price">Wpisz nową cenę:</label>
+            <input type="number" th:field="*{price}" class="form-control" id="price" aria-describedby="titleHelp" placeholder="Wpisz cenę w PLN">
+            <label for="photoUrl">Dodaj nowy link do zdjęcia:</label>
+            <input type="text" th:field="*{photoUrl}" class="form-control" id="photoUrl" aria-describedby="titleHelp" placeholder="Wklej link do zdjęcia potrawy">
+            <label for="category">Wpisz nową kategorię:</label>
+            <input type="text" th:field="*{category}" class="form-control" id="category" aria-describedby="titleHelp" placeholder="Zapisz kategorie">
+            <br>
+            <button type="submit" class="btn btn-primary">Koniec edycji</button>
+        </form>
+
+        <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+    </div>
+</div>
+</body>
+</html>

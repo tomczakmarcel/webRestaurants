@@ -1,10 +1,12 @@
 package com.example.web_restauracje.controller;
 
 import com.example.web_restauracje.models.Database;
+import com.example.web_restauracje.models.Meal;
 import com.example.web_restauracje.models.OpeningHour;
 import com.example.web_restauracje.service.RestaurantService;
 import com.google.firebase.FirebaseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -41,23 +43,82 @@ public class RestaurantController {
         return "restaurant";
     }
 
-        @GetMapping("/{restaurantName}/meallist")
-        public String getRestaurantMeals(Model model, @PathVariable String restaurantName) throws ExecutionException, InterruptedException, FirebaseException
+    @GetMapping("/{restaurantName}/meallist")
+    public String getRestaurantMeals(Model model, @PathVariable String restaurantName) throws ExecutionException, InterruptedException, FirebaseException
+    {
+        try
         {
-            try
-            {
-                model.addAttribute("restaurantInfo",Database.getRestaurant(restaurantName));
-                model.addAttribute("mealList", Database.getMealListFromRestaurant(restaurantName));
-            }
-            catch (Exception noRestaurantOfThisName)
-            {
-                return "noRestaurantAvailable";
-            }
-
-            return "mealList";
+            model.addAttribute("restaurantInfo",Database.getRestaurant(restaurantName));
+            model.addAttribute("mealList", Database.getMealListFromRestaurant(restaurantName));
+        }
+        catch (Exception noRestaurantOfThisName)
+        {
+            return "noRestaurantAvailable";
         }
 
-        @GetMapping("/{restaurantName}/openinghours")
+        return "mealList";
+    }
+
+    @GetMapping("/{restaurantName}/meallist/{mealName}")
+    public String getRestaurantMeals(Model model, @PathVariable String restaurantName, @PathVariable String mealName) throws ExecutionException, InterruptedException, FirebaseException, IOException {
+        model.addAttribute("restaurantInfo",Database.getRestaurant(restaurantName));
+        model.addAttribute("mealList", Database.getMealListFromRestaurant(restaurantName));
+        model.addAttribute("meal", Database.getMeal(restaurantName, mealName));
+
+        return "editMeal";
+    }
+
+    @PostMapping("/{restaurantName}/meallist/{mealName}")
+    public String editRestaurantMeals(Model model, @PathVariable String restaurantName, @PathVariable String mealName, Meal meal) throws ExecutionException, InterruptedException, FirebaseException
+    {
+        try
+        {
+            Database.editMeal(restaurantName, mealName, meal.getCategory(), meal.getName(), meal.getPrice(), meal.getPhotoUrl());
+        } catch (IOException e) {
+            return "noRestaurantAvailable";
+        }
+        model.addAttribute("restaurantInfo",Database.getRestaurant(restaurantName));
+        model.addAttribute("mealList", Database.getMealListFromRestaurant(restaurantName));
+
+        return "/mealList";
+    }
+
+    @GetMapping(value = "/{restaurantName}/meallist/{mealName}/delete")
+    public String deleteMeal(Model model, @PathVariable String restaurantName, @PathVariable String mealName, Meal meal) throws ExecutionException, InterruptedException, FirebaseException
+    {
+        try
+        {
+            Database.removeMeal(restaurantName, mealName);
+        } catch (IOException e) {
+            return "noRestaurantAvailable";
+        }
+        model.addAttribute("restaurantInfo",Database.getRestaurant(restaurantName));
+        model.addAttribute("mealList", Database.getMealListFromRestaurant(restaurantName));
+        return "mealList";
+    }
+
+    @GetMapping(value = "/{restaurantName}/meallist/add")
+    public String addMeal(Model model, @PathVariable String restaurantName, Meal meal) throws ExecutionException, InterruptedException, FirebaseException
+    {
+        model.addAttribute("restaurantInfo",Database.getRestaurant(restaurantName));
+        return "addMeal";
+    }
+
+    @PostMapping(value = "/{restaurantName}/meallist/add")
+    public String saveMeal(Model model, @PathVariable String restaurantName, Meal meal) throws ExecutionException, InterruptedException, FirebaseException
+    {
+        try
+        {
+            Database.addMeal(restaurantName, meal.getCategory(), meal.getName(), meal.getPrice(), meal.getPhotoUrl());
+        } catch (IOException e) {
+            return "noRestaurantAvailable";
+        }
+        model.addAttribute("restaurantInfo",Database.getRestaurant(restaurantName));
+        model.addAttribute("mealList", Database.getMealListFromRestaurant(restaurantName));
+        return "/mealList";
+    }
+
+    @GetMapping("/{restaurantName}/openinghours")
         public String getRestaurantOpeningHours(Model model, @PathVariable String restaurantName) throws ExecutionException, InterruptedException, FirebaseException {
             try
             {
@@ -70,14 +131,14 @@ public class RestaurantController {
                 return "noRestaurantAvailable";
             }
 
-            return "openinghours";
+            return "openingHours";
         }
 
     @GetMapping("/{restaurantName}/openinghours/{when}")
     public String editRestaurantOpeningHours(Model model, @PathVariable String restaurantName, @PathVariable String when) throws ExecutionException, InterruptedException, FirebaseException, IOException {
         model.addAttribute("restaurantInfo",Database.getRestaurant(restaurantName));
         model.addAttribute("openingHour", Database.getOpeningHour(restaurantName, when));
-        return "editopeninghour";
+        return "editOpeningHour";
     }
 
     @PostMapping("/{restaurantName}/openinghours/{when}")
@@ -93,6 +154,6 @@ public class RestaurantController {
 
         model.addAttribute("restaurantInfo",Database.getRestaurant(restaurantName));
         model.addAttribute("openingHours", Database.getOpeningHours(restaurantName)); //MARTOM - strona restauracji nei moze sie wyjebywac jak braknie opening hours!!!
-        return "openinghours";
+        return "openingHours";
     }
     }
