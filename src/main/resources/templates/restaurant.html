@@ -8,13 +8,17 @@
 
 <body>
 <div class="container">
-    <div class="text-center"><img th:src="${restaurantInfo.logoURL}" alt="Logo restauracji"/></imghttps:></div>
+    <div class="text-center">
+        <img th:src="${restaurantInfo.logoURL}" alt="Logo restauracji"/></imghttps:>
+        <br>
+        <td><a th:href="@{'/restaurants/'}" type="submit" name="submit" value="value" class="btn btn-dark">Wróć</a></td>
+    </div>
     <div class="row" style="height: 50px">
     </div>
 
-    <div class="text-center"><td><a th:href="@{'/restaurants/' + ${restaurantInfo.name} + '/meallist'}" type="submit" name="submit" value="value" class="btn btn-light">Menu list</a></td>
-    <div class="text-center"><td><a href="/reservation/" type="submit" name="submit" value="value" class="btn btn-light">Reservation list</a></td>
-    <div class="text-center"><td><a th:href="@{'/restaurants/' + ${restaurantInfo.name} + '/openinghours'}" type="submit" name="submit" value="value" class="btn btn-light">Opening hours</a></td>
+    <div class="text-center"><td><a th:href="@{'/restaurants/' + ${restaurantInfo.name} + '/meallist'}" type="submit" name="submit" value="value" class="btn btn-light">Menu</a></td>
+    <div class="text-center"><td><a href="/reservation/" type="submit" name="submit" value="value" class="btn btn-light">Lista rezerwacji</a></td>
+    <div class="text-center"><td><a th:href="@{'/restaurants/' + ${restaurantInfo.name} + '/openinghours'}" type="submit" name="submit" value="value" class="btn btn-light">Godziny otwarcia</a></td>
     </div>
         <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
         <script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>

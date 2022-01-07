@@ -116,7 +116,6 @@ public class Database {
         QuerySnapshot querySnapshot = query.get();
         List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
         for (QueryDocumentSnapshot doc : documents) {
-
             String id = doc.getId();
             int to = Integer.parseInt(Objects.requireNonNull(doc.get("to")).toString());
             int from = Integer.parseInt(Objects.requireNonNull(doc.get("from")).toString());
@@ -126,8 +125,13 @@ public class Database {
             String date = (String) doc.get("date");
             Reservation reservation = new Reservation(date, from, person, to, table, restaurantId, id);
             reservationList.add(reservation);
-
         }
+        Collections.sort(reservationList, new Comparator<Reservation>() {
+            @Override
+            public int compare(Reservation o1, Reservation o2) {
+                return Integer.compare(o1.getRestaurantId(), o2.getRestaurantId());
+            }
+        });
     }
 
     public static ArrayList<Reservation> getAllReservationList() {

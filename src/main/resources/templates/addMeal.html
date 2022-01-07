@@ -8,7 +8,11 @@
 
 <body>
 <div class="container">
-    <div class="text-center"><img th:src="${restaurantInfo.logoURL}" alt="Logo restauracji"/></imghttps:></div>
+    <div class="text-center">
+        <img th:src="${restaurantInfo.logoURL}" alt="Logo restauracji"/></imghttps:>
+        <br>
+        <td><a th:href="@{'/restaurants/' + ${restaurantInfo.name}}" type="submit" name="submit" value="value" class="btn btn-dark">Wróć</a></td>
+    </div>
     <div class="row" style="height: 50px">
     </div>
     <div class="d-flex justify-content-center">

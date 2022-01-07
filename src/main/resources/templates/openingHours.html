@@ -8,17 +8,21 @@
 
 <body>
 <div class="container">
-    <div class="text-center"><img th:src="${restaurantInfo.logoURL}" alt="Logo restauracji"/></imghttps:></div>
+    <div class="text-center">
+        <img th:src="${restaurantInfo.logoURL}" alt="Logo restauracji"/></imghttps:>
+        <br>
+        <td><a th:href="@{'/restaurants/' + ${restaurantInfo.name}}" type="submit" name="submit" value="value" class="btn btn-dark">Wróć</a></td>
+    </div>
     <div class="row" style="height: 50px">
     </div>
     <div class="row">
         <table class="table">
             <thead>
             <tr>
-                <th scope="col"> When </th>
-                <th scope="col"> Open </th>
-                <th scope="col"> Close </th>
-                <th scope="col"> Edit </th>
+                <th scope="col"> Kiedy </th>
+                <th scope="col"> Otwarcie </th>
+                <th scope="col"> Zamkniecie </th>
+                <th scope="col"> Edycja </th>
             </tr>
             </thead>
             <tbody>

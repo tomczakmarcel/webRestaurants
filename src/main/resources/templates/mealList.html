@@ -11,6 +11,7 @@
     <div class="text-center"><img th:src="${restaurantInfo.logoURL}" alt="Logo restauracji"/></imghttps:>
         <br>
         <td><a th:href="@{'/restaurants/' + ${restaurantInfo.name} + '/meallist/add/'}" type="submit" name="submit" value="value" class="btn btn-dark">Dodaj nową pozycję</a></td>
+        <td><a th:href="@{'/restaurants/' + ${restaurantInfo.name}}" type="submit" name="submit" value="value" class="btn btn-dark">Wróć</a></td>
     </div>
 
     <div class="row" style="height: 50px">
@@ -19,25 +20,25 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col"> Category </th>
-                <th scope="col"> Name </th>
-                <th scope="col"> Price </th>
-                <th scope="col"> Photo </th>
-                <th scope="col"> Edit </th>
-                <th scope="col"> Remove </th>
+                <th scope="col"> Kategoria </th>
+                <th scope="col"> Nazwa </th>
+                <th scope="col"> Cena </th>
+                <th scope="col"> Zdjecie </th>
+                <th scope="col"> Edycja </th>
+                <th scope="col"> Usun </th>
             </tr>
             </thead>
             <tbody>
             <tr th:if="${mealList.empty}">
-                <td colspan="2"> No meals Available, you can add one by clicking correct button </td>
+                <td colspan="2"> Brak posilków, dodaj je odpowiednim przyciskiem </td>
             </tr>
             <tr th:each="meal : ${mealList}">
                 <td><span th:text="${meal.category}"> Category </span></td>
                 <td><span th:text="${meal.name}"> Name </span></td>
                 <td><span th:text="${meal.price}"/> zł </td>
                 <td><img th:src="${meal.photoUrl}" th:target="_blank" type="submit" name="submit" value="value" style="height: 50px" alt="${meal.name} photo"/></td>
-                <td><a th:href="@{'/restaurants/' + ${restaurantInfo.name} + '/meallist/' + ${meal.name} +'/'}" type="submit" name="submit" value="value" class="btn btn-light"> Edit </a></td>
-                <td><a th:href="@{'/restaurants/' + ${restaurantInfo.name} + '/meallist/' + ${meal.name} + '/delete/'}" type="submit" name="submit" value="value" class="btn btn-light"> Delete </a></td>
+                <td><a th:href="@{'/restaurants/' + ${restaurantInfo.name} + '/meallist/' + ${meal.name} +'/'}" type="submit" name="submit" value="value" class="btn btn-light"> Edytuj </a></td>
+                <td><a th:href="@{'/restaurants/' + ${restaurantInfo.name} + '/meallist/' + ${meal.name} + '/delete/'}" type="submit" name="submit" value="value" class="btn btn-light"> Usun </a></td>
             </tr>
             </tbody>
         </table>

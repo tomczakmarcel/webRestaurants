@@ -8,17 +8,20 @@
 
 <body>
 <div class="container">
-    <div class="text-center"><img th:src="@{https://media-cdn.tripadvisor.com/media/photo-s/10/e5/a4/fc/restaurant.jpg}" alt=""/></imghttps:></div>
+    <div class="text-center"><img th:src="@{https://media-cdn.tripadvisor.com/media/photo-s/10/e5/a4/fc/restaurant.jpg}" alt=""/></imghttps:>
+        <br>
+        <td><a th:href="@{'/'}" type="submit" name="submit" value="value" class="btn btn-dark">Wróć</a></td>
+    </div>
     <div class="row" style="height: 50px">
     </div>
         <div class="row">
         <table class="table">
             <thead>
             <tr>
-                <th scope="col"> Restaurant ID: </th>
-                <th scope="col"> Name of Restaurant: </th>
-                <th scope="col"> Description: </th>
-                <th scope="col"> More details </th>
+                <th scope="col"> ID restauracji </th>
+                <th scope="col"> Nazwa restauracji: </th>
+                <th scope="col"> Opis: </th>
+                <th scope="col"> Więcej </th>
             </tr>
             </thead>
             <tbody>
@@ -29,7 +32,7 @@
                 <td><span th:text="${restaurant.restaurantId}"> Restaurant ID: </span></td>
                 <td><span th:text="${restaurant.name}"> Name of Restaurant: </span></td>
                 <td><span th:text="${restaurant.description}"> Description: </span></td>
-                <td><a th:href="${restaurant.name}" type="submit" name="submit" value="value" class="btn btn-light">Get more details about <span th:text="${restaurant.name}"/></a></td>
+                <td><a th:href="${restaurant.name}" type="submit" name="submit" value="value" class="btn btn-light">Więcej informacji o <span th:text="${restaurant.name}"/></a></td>
             </tr>
             </tbody>
         </table>
