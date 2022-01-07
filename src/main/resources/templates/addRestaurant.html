@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Opening hours</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+
+<body>
+<div class="container">
+    <div class="text-center">
+        Wypełnij poniższe pola by móc dodać nową restaurację!
+        <br>
+        <td><a th:href="@{'/restaurants/'}" type="submit" name="submit" value="value" class="btn btn-dark">Wróć</a></td>
+    </div>
+    <div class="row" style="height: 50px">
+    </div>
+    <div class="d-flex justify-content-center">
+        <form action="#" th:action="@{'/restaurants/add/'}" th:object="${restaurant}" th:method="post">
+            <label th:text="@{'Dodaj nową restaurację!'}"></label>
+            <br>
+            <br>
+            <label for="name">Wpisz nazwę restauracji:</label>
+            <input type="text" th:field="*{name}" class="form-control" id="name" aria-describedby="titleHelp" placeholder="Wpisz nazwę restauracji">
+            <label for="description">Wpisz krótki opis restauracji:</label>
+            <input type="text" th:field="*{description}" class="form-control" id="description" aria-describedby="titleHelp" placeholder="Wpisz krótki opis restauracji:">
+            <label for="logoURL">Dodaj zdjęcie:</label>
+            <input type="text" th:field="*{logoURL}" class="form-control" id="logoURL" aria-describedby="titleHelp" placeholder="Wklej link do zdjęcia restauracji">
+            <br>
+            <button type="submit" class="btn btn-primary">Dodaj</button>
+        </form>
+
+        <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+    </div>
+</div>
+</body>
+</html>

@@ -268,6 +268,35 @@ public class Database {
         Database.updateDataOnFirebase();
     }
 
+    public static void addRestaurant(String name, String desc, String logoURL) throws ExecutionException, InterruptedException {
+        ArrayList<Meal> mealsEmpty = new ArrayList<Meal>();
+        ArrayList<Reservation> reservationListEmpty = new ArrayList<Reservation>();
+        ArrayList<OpeningHour> openingHoursEmpty = new ArrayList<OpeningHour>();
+        Long restaurants = restaurantList.stream().count();
+        Integer restaurantId = restaurants.intValue() - 1;
+        Restaurant restaurant = new Restaurant(restaurantId, name, logoURL, desc, mealsEmpty, reservationListEmpty, false, openingHoursEmpty);
+        restaurantList.add(restaurant);
+        Database.updateDataOnFirebase();
+    }
+
+    public static void editRestaurant(String oldName, String newName, String desc, Boolean expanded, String logoURL) throws InterruptedException, ExecutionException, IOException {
+        Restaurant restaurant = getRestaurant(oldName);
+        ArrayList<Meal> meals = getMealList(oldName);
+        ArrayList<Reservation> reservations = getReservationList(oldName);
+        ArrayList<OpeningHour> openingHours = getOpeningHours(oldName);
+        Integer restaurantId = restaurant.getRestaurantId();
+        getRestaurantList().remove(restaurant);
+        Restaurant editedRestaurant = new Restaurant(restaurantId, newName, logoURL, desc, meals, reservations, expanded, openingHours);
+        restaurantList.add(editedRestaurant);
+        Database.updateDataOnFirebase();
+    }
+
+    public static void removeRestaurant(String restaurantName) throws ExecutionException, InterruptedException {
+        Restaurant restaurant = getRestaurant(restaurantName);
+        getRestaurantList().remove(restaurant);
+        Database.updateDataOnFirebase();
+    }
+
     public static void addMeal(String restaurantName, String newCategory, String newName, double newPrice, String newPhotoUrl) throws InterruptedException, ExecutionException, IOException {
         Meal meal = new Meal();
         meal.setName(newName);

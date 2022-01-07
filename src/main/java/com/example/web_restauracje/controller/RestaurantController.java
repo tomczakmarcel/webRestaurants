@@ -3,6 +3,7 @@ package com.example.web_restauracje.controller;
 import com.example.web_restauracje.models.Database;
 import com.example.web_restauracje.models.Meal;
 import com.example.web_restauracje.models.OpeningHour;
+import com.example.web_restauracje.models.Restaurant;
 import com.example.web_restauracje.service.RestaurantService;
 import com.google.firebase.FirebaseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,4 +157,16 @@ public class RestaurantController {
         model.addAttribute("openingHours", Database.getOpeningHours(restaurantName)); //MARTOM - strona restauracji nei moze sie wyjebywac jak braknie opening hours!!!
         return "openingHours";
     }
+
+    @GetMapping("/add")
+    public String addRestaurant(Restaurant restaurant) {
+        return "addRestaurant";
+    }
+
+    @PostMapping("/add")
+    public String saveRestaurant(Model model, Restaurant restaurant) throws ExecutionException, InterruptedException, FirebaseException, IOException {
+        Database.addRestaurant(restaurant.getName(), restaurant.getDescription(), restaurant.getLogoURL());
+        model.addAttribute("restaurants", Database.getRestaurantList());
+        return "restaurants";
+        }
     }

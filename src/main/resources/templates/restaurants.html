@@ -10,7 +10,9 @@
 <div class="container">
     <div class="text-center"><img th:src="@{https://media-cdn.tripadvisor.com/media/photo-s/10/e5/a4/fc/restaurant.jpg}" alt=""/></imghttps:>
         <br>
+        <br>
         <td><a th:href="@{'/'}" type="submit" name="submit" value="value" class="btn btn-dark">Wróć</a></td>
+        <br>
     </div>
     <div class="row" style="height: 50px">
     </div>
@@ -32,7 +34,7 @@
                 <td><span th:text="${restaurant.restaurantId}"> Restaurant ID: </span></td>
                 <td><span th:text="${restaurant.name}"> Name of Restaurant: </span></td>
                 <td><span th:text="${restaurant.description}"> Description: </span></td>
-                <td><a th:href="${restaurant.name}" type="submit" name="submit" value="value" class="btn btn-light">Więcej informacji o <span th:text="${restaurant.name}"/></a></td>
+                <td><a th:href="@{'/restaurants/' + ${restaurant.name}}" type="submit" name="submit" value="value" class="btn btn-light">Więcej informacji o <span th:text="${restaurant.name}"/></a></td>
             </tr>
             </tbody>
         </table>
