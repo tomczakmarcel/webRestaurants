@@ -24,6 +24,8 @@
                 <th scope="col"> Nazwa restauracji: </th>
                 <th scope="col"> Opis: </th>
                 <th scope="col"> Więcej </th>
+                <th scope="col"> Edycja </th>
+                <th scope="col"> Usun </th>
             </tr>
             </thead>
             <tbody>
@@ -35,6 +37,8 @@
                 <td><span th:text="${restaurant.name}"> Name of Restaurant: </span></td>
                 <td><span th:text="${restaurant.description}"> Description: </span></td>
                 <td><a th:href="@{'/restaurants/' + ${restaurant.name}}" type="submit" name="submit" value="value" class="btn btn-light">Więcej informacji o <span th:text="${restaurant.name}"/></a></td>
+                <td><a th:href="@{'/restaurants/' + ${restaurantInfo.name} + '/edit/'}" type="submit" name="submit" value="value" class="btn btn-light"> Edytuj </a></td>
+                <td><a th:href="@{'/restaurants/' + ${restaurantInfo.name} + '/delete/'}" type="submit" name="submit" value="value" class="btn btn-light"> Usun </a></td>
             </tr>
             </tbody>
         </table>

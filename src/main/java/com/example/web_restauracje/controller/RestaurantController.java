@@ -116,7 +116,7 @@ public class RestaurantController {
         }
         model.addAttribute("restaurantInfo",Database.getRestaurant(restaurantName));
         model.addAttribute("mealList", Database.getMealListFromRestaurant(restaurantName));
-        return "/mealList";
+        return "mealList";
     }
 
     @GetMapping("/{restaurantName}/openinghours")
@@ -169,4 +169,37 @@ public class RestaurantController {
         model.addAttribute("restaurants", Database.getRestaurantList());
         return "restaurants";
         }
+
+    @GetMapping(value = "/{restaurantName}/delete")
+    public String deleteRestaurant(Model model, @PathVariable String restaurantName) throws ExecutionException, InterruptedException, FirebaseException
+    {
+        try
+        {
+            Database.removeRestaurant(restaurantName);
+        } catch (Exception e) {
+            return "noRestaurantAvailable";
+        }
+        model.addAttribute("restaurants",Database.getRestaurantList());
+        return "restaurants";
+    }
+
+    @GetMapping("/{restaurantName}/edit")
+    public String editRestaurant(Model model, @PathVariable String restaurantName, Restaurant restaurant) throws ExecutionException, InterruptedException, FirebaseException, IOException {
+        model.addAttribute("restaurant",Database.getRestaurant(restaurantName));
+        return "editRestaurant";
+    }
+
+    @PostMapping("/{restaurantName}/edit")
+    public String saveEditedRestaurant(Model model, @PathVariable String restaurantName, Restaurant restaurant) throws ExecutionException, InterruptedException, FirebaseException
+    {
+        try
+        {
+            Database.editRestaurant(restaurantName, restaurant.getName(), restaurant.getDescription(), false, restaurant.getLogoURL());
+        } catch (IOException e) {
+            return "noRestaurantAvailable";
+        }
+        model.addAttribute("restaurants",Database.getRestaurantList());
+
+        return "restaurants";
+    }
     }

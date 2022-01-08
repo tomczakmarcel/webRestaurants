@@ -273,7 +273,7 @@ public class Database {
         ArrayList<Reservation> reservationListEmpty = new ArrayList<Reservation>();
         ArrayList<OpeningHour> openingHoursEmpty = new ArrayList<OpeningHour>();
         Long restaurants = restaurantList.stream().count();
-        Integer restaurantId = restaurants.intValue() - 1;
+        Integer restaurantId = restaurants.intValue() + 1;
         Restaurant restaurant = new Restaurant(restaurantId, name, logoURL, desc, mealsEmpty, reservationListEmpty, false, openingHoursEmpty);
         restaurantList.add(restaurant);
         Database.updateDataOnFirebase();
@@ -286,8 +286,8 @@ public class Database {
         ArrayList<OpeningHour> openingHours = getOpeningHours(oldName);
         Integer restaurantId = restaurant.getRestaurantId();
         getRestaurantList().remove(restaurant);
-        Restaurant editedRestaurant = new Restaurant(restaurantId, newName, logoURL, desc, meals, reservations, expanded, openingHours);
-        restaurantList.add(editedRestaurant);
+        restaurant = new Restaurant(restaurantId, newName, logoURL, desc, meals, reservations, expanded, openingHours);
+        restaurantList.add(restaurant);
         Database.updateDataOnFirebase();
     }
 
