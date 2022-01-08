@@ -39,7 +39,7 @@ public class Restaurant {
     public ArrayList<Meal> getMealList() { return mealList; }
 
     public String getLogoURL() { return logoURL; }
-    public void setLogoURL(){ this.logoURL = logoURL; };
+    public void setLogoURL(String logoURL){ this.logoURL = logoURL; };
 
     public void setMealList(ArrayList<Meal> mealList) {
         this.mealList = mealList;

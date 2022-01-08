@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Meal list</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+</head>
+
+<body>
+<div class="container">
+    <div class="text-center"><img th:src="@{https://raw.githubusercontent.com/tomczakmarcel/webRestaurants/master/src/main/resources/images/logo.png}" alt="Logo restauracji"/></imghttps:>
+        <br>
+        <td><a th:href="@{'/'}" type="submit" name="submit" value="value" class="btn btn-dark">Wróć</a></td>
+    </div>
+
+    <div class="row" style="height: 50px">
+    </div>
+    <div class="row">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col"> E-Mail </th>
+                <th scope="col"> Imie </th>
+                <th scope="col"> Nazwisko </th>
+                <th scope="col"> Admin? </th>
+                <th scope="col"> Id </th>
+                <th scope="col"> Edycja </th>
+                <th scope="col"> Usun </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td><span th:text="${user.email}"> E-mail </span></td>
+                <td><span th:text="${user.name}"> Imie </span></td>
+                <td><span th:text="${user.surname}"> Nazwisko </span></td>
+                <td><span th:text="${user.isAdmin}"/></td>
+                <td><span th:text="${user.userId}"/> Id </td>
+                <td><a th:href="@{'/'}" type="submit" name="submit" value="value" class="btn btn-light"> Edytuj </a></td>
+                <td><a th:href="@{'/'}" type="submit" name="submit" value="value" class="btn btn-light"> Usun </a></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <script th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/1.12.9-1/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/4.0.0-2/js/bootstrap.min.js}"></script>
+    </div>
+</div>
+</body>
+</html>

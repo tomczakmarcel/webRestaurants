@@ -6,13 +6,13 @@ import com.example.web_restauracje.models.OpeningHour;
 import com.example.web_restauracje.models.Restaurant;
 import com.example.web_restauracje.service.RestaurantService;
 import com.google.firebase.FirebaseException;
+import com.sun.jdi.IntegerValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
@@ -29,8 +29,17 @@ public class RestaurantController {
     }
 
     @GetMapping("/{restaurantName}")
-    public String getRestaurantDetails(Model model, @PathVariable String restaurantName) {
-        String date[] = {"Monday-Thursday", "Friday", "Saturday", "Sunday"};
+    public String getRestaurantDetails(Model model, @PathVariable String restaurantName) throws IOException {
+        var openingHours2 = Database.getOpeningHours(restaurantName);
+        long length = openingHours2.stream().count();
+        Integer lengthInt = (int) (long) length;
+        String date[] = new String[lengthInt];
+        for (int i = 0; i<lengthInt; i++)
+        {
+            var test = openingHours2.get(i).getWhen();
+            date[i] = test;
+        }
+
         try {
             model.addAttribute("restaurantInfo", Database.getRestaurant(restaurantName));
             for (String dates : date)

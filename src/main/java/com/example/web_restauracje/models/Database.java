@@ -175,7 +175,7 @@ public class Database {
 
 
     //dziala szybciej
-    public static void loadUserList() throws ExecutionException, InterruptedException {
+    public static ArrayList<User> loadUserList() throws ExecutionException, InterruptedException {
 
         ArrayList<User> users = new ArrayList<>();
         Firestore db = FirestoreClient.getFirestore();
@@ -188,6 +188,7 @@ public class Database {
             Object o = doc.getId();
             users.add(newUser);
         }
+        return users;
     }
 
     public static ArrayList<User> getUserList() {
@@ -272,6 +273,16 @@ public class Database {
         ArrayList<Meal> mealsEmpty = new ArrayList<Meal>();
         ArrayList<Reservation> reservationListEmpty = new ArrayList<Reservation>();
         ArrayList<OpeningHour> openingHoursEmpty = new ArrayList<OpeningHour>();
+        if (openingHoursEmpty.isEmpty()) {
+            String date[] = {"Monday-Thursday", "Friday", "Saturday", "Sunday"};
+            for (String dates : date) {
+                OpeningHour openH = new OpeningHour();
+                openH.setOpen(0);
+                openH.setClose(0);
+                openH.setWhen(dates);
+                openingHoursEmpty.add(openH);
+            }
+        }
         Long restaurants = restaurantList.stream().count();
         Integer restaurantId = restaurants.intValue() + 1;
         Restaurant restaurant = new Restaurant(restaurantId, name, logoURL, desc, mealsEmpty, reservationListEmpty, false, openingHoursEmpty);
